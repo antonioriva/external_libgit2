@@ -36,6 +36,7 @@ if ( STATICLIB_USE_DEPLIBS_CACHE )
 endif ( )
 
 # sources
+set ( ${PROJECT_NAME}_INCLUDES_PLATFORM )
 file ( GLOB ${PROJECT_NAME}_SRC
         ${${PROJECT_NAME}_LOOKASIDE_DIR}/src/*.c
         ${${PROJECT_NAME}_LOOKASIDE_DIR}/src/streams/*.c
@@ -45,7 +46,11 @@ file ( GLOB ${PROJECT_NAME}_SRC
         ${${PROJECT_NAME}_LOOKASIDE_DIR}/src/hash/sha1dc/*
         ${${PROJECT_NAME}_LOOKASIDE_DIR}/deps/http-parser/*.c )
 if ( external_libgit2_TOOLCHAIN MATCHES "windows_[^_]+_[^_]+" )
-    # TODO
+    file ( GLOB ${PROJECT_NAME}_SRC_WIN32
+            ${${PROJECT_NAME}_LOOKASIDE_DIR}/src/win32/*.c
+            ${${PROJECT_NAME}_LOOKASIDE_DIR}/deps/regex/regex.c )
+    list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC_WIN32} )
+    list ( APPEND ${PROJECT_NAME}_INCLUDES_PLATFORM ${${PROJECT_NAME}_LOOKASIDE_DIR}/deps/regex/ )
 else ( )
     file ( GLOB ${PROJECT_NAME}_SRC_UNIX
             ${${PROJECT_NAME}_LOOKASIDE_DIR}/src/unix/*.c )
@@ -61,5 +66,6 @@ target_include_directories ( ${PROJECT_NAME} BEFORE PRIVATE
         ${${PROJECT_NAME}_LOOKASIDE_DIR}/include
         ${${PROJECT_NAME}_LOOKASIDE_DIR}/src
         ${${PROJECT_NAME}_LOOKASIDE_DIR}/deps/http-parser
+        ${${PROJECT_NAME}_INCLUDES_PLATFORM}
         ${${PROJECT_NAME}_DEPS_PC_INCLUDE_DIRS} )
 target_compile_definitions ( ${PROJECT_NAME} PRIVATE )

@@ -53,8 +53,8 @@ int main() {
         auto err = git_clone(std::addressof(repo),
                 "https://github.com/staticlibs/external_libgit2.git",
                 //"git+ssh://androiddev@127.0.0.1/home/androiddev/app",
-                "lookaside_libgit2_tmp", std::addressof(opts));
-//        std::cout << giterr_last()->message << std::endl;
+                "cloned_tmp", std::addressof(opts));
+        // std::cout << giterr_last()->message << std::endl;
         slassert(0 == err);
         auto deferred_repo = sl::support::defer([repo]() STATICLIB_NOEXCEPT {
             git_repository_free(repo);
