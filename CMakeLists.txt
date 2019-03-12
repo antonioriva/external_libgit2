@@ -22,6 +22,10 @@ set ( ${PROJECT_NAME}_URL https://github.com/staticlibs/external_libgit2.git )
 include ( ${CMAKE_CURRENT_LIST_DIR}/resources/macros.cmake )
 
 # standalone build
+if ( NOT DEFINED CMAKE_LIBRARY_OUTPUT_DIRECTORY )
+    set ( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR} )
+    set ( ZLIB_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR} )
+endif ( )
 if ( NOT DEFINED STATICLIB_TOOLCHAIN )
     if ( NOT ${CMAKE_SYSTEM_NAME} STREQUAL "Linux" )
         external_libgit2_add_subdirectory ( ${CMAKE_CURRENT_LIST_DIR}/../external_zlib )
