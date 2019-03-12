@@ -7,9 +7,9 @@ libgit2 library build for Staticlibs
 This project is a part of [Staticlibs](http://staticlibs.net/).
 
 This project contains a CMake wrapper for the [libgit2 library](https://libgit2.org/) that
-can be used to build sources imported from [CentOS lookaside](https://github.com/staticlibs/lookaside_libgit2).
+can be used to build sources imported from [Fedora lookaside](https://github.com/staticlibs/lookaside_libgit2).
 
-Link to the [documentation](https://libgit2.org/libgit2/#HEAD).
+Link to the [documentation](https://libgit2.org/libgit2/#0.28.0).
 
 How to build
 ------------
