@@ -16,7 +16,7 @@ cmake_minimum_required ( VERSION 2.8.12 )
 
 # project setup
 project ( external_libgit2 C CXX )
-set ( ${PROJECT_NAME}_STATICLIB_VERSION 0.28.0-1 )
+set ( ${PROJECT_NAME}_STATICLIB_VERSION 0.28.0-2 )
 set ( ${PROJECT_NAME}_DESCRIPTION "libgit2 library build for Staticlibs" )
 set ( ${PROJECT_NAME}_URL https://github.com/staticlibs/external_libgit2.git )
 include ( ${CMAKE_CURRENT_LIST_DIR}/resources/macros.cmake )
@@ -63,7 +63,7 @@ set ( ${PROJECT_NAME}_PC_CFLAGS "${${PROJECT_NAME}_PC_CFLAGS} -I${CMAKE_CURRENT_
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_[^_]+_[^_]+" )
     set ( ${PROJECT_NAME}_PC_CFLAGS "${${PROJECT_NAME}_PC_CFLAGS} /wd4510 /wd4512 /wd4610" )
 endif ( )
-set ( ${PROJECT_NAME}_PC_LIBS "-L${CMAKE_LIBRARY_OUTPUT_DIRECTORY} -lgit2" )
+set ( ${PROJECT_NAME}_PC_LIBS "-L${CMAKE_LIBRARY_OUTPUT_DIRECTORY} -lgit2 -lssh2" )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "linux_[^_]+_[^_]+" )
     set ( ${PROJECT_NAME}_PC_LIBS "${${PROJECT_NAME}_PC_LIBS} -lrt -lpthread" )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_[^_]+_[^_]+" )
