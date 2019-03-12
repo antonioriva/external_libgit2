@@ -29,7 +29,7 @@
 #include "staticlib/support.hpp"
 
 int cred_cb(git_cred** out, const char*, const char*, unsigned int, void*) {
-    // https://libgit2.github.com/libgit2/#HEAD/group/cred/git_cred_ssh_key_new
+    // https://libgit2.org/libgit2/#0.28.0/group/cred/git_cred_ssh_key_new
     return git_cred_ssh_key_new(out, "androiddev",
             "/home/alex/.ssh/id_rsa.pub", "/home/alex/.ssh/id_rsa", nullptr);
 }
@@ -41,25 +41,28 @@ int main() {
         git_libgit2_shutdown();
     });
 
-    // flip this flag to enable clone
-    bool enabled = false;
-    if (enabled) {
-        git_repository* repo = nullptr;
+    git_repository* repo = nullptr;
 
+    // flip me and provide credentials to tests ssh
+    bool enable_ssh = false;
+    if (enable_ssh) {
         git_clone_options opts;
         git_clone_init_options(std::addressof(opts), GIT_CLONE_OPTIONS_VERSION);
         opts.fetch_opts.callbacks.credentials = cred_cb;
-        
         auto err = git_clone(std::addressof(repo),
-                "https://github.com/staticlibs/external_libgit2.git",
-                //"git+ssh://androiddev@127.0.0.1/home/androiddev/app",
-                "cloned_tmp", std::addressof(opts));
-        // std::cout << giterr_last()->message << std::endl;
+                "git+ssh://androiddev@127.0.0.1/home/androiddev/app",
+                "cloned_tmp_ssh", std::addressof(opts));
         slassert(0 == err);
-        auto deferred_repo = sl::support::defer([repo]() STATICLIB_NOEXCEPT {
-            git_repository_free(repo);
-        });
     }
+
+    // https
+    auto err = git_clone(std::addressof(repo),
+            "https://github.com/staticlibs/external_libgit2.git",
+            "cloned_tmp", nullptr);
+    slassert(0 == err);
+    auto deferred_repo = sl::support::defer([repo]() STATICLIB_NOEXCEPT {
+        git_repository_free(repo);
+    });
 
     return 0;
 }

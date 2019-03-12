@@ -85,7 +85,7 @@ script:
     popd ;
     pushd build ;
     cmake ../external_libgit2/test -DCMAKE_BUILD_TYPE=Release ;
-    make ;
+    make all test;
     popd ;
 
     `# Android` ;
