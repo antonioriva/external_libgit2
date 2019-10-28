@@ -66,14 +66,14 @@ build_script:
   - cd ..
   
 artifacts:
-  - path: projects/build-standalone
+  - path: c:\projects\build-standalone
     name: build
     type: zip
     
-  - path: projects/build_i386
+  - path: c:\projects\build_i386
     name: build_i386
     type: zip
     
-  - path: projects/build_amd64
+  - path: c:\projects\build_amd64
     name: build_amd64
     type: zip
