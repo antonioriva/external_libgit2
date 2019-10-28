@@ -63,3 +63,15 @@ build_script:
         -DCMAKE_BUILD_TYPE=Release
   - cmake --build . --config Release
   - ctest
+artifacts:
+  - path: build-standalone
+    name: build
+    type: zip
+    
+  - path: build_i386
+    name: build_i386
+    type: zip
+    
+  - path: build_amd64
+    name: build_amd64
+    type: zip
