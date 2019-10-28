@@ -63,6 +63,8 @@ build_script:
         -DCMAKE_BUILD_TYPE=Release
   - cmake --build . --config Release
   - ctest
+  - cd ..
+  
 artifacts:
   - path: build-standalone
     name: build
