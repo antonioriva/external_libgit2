@@ -14,11 +14,9 @@
 
 environment:
   matrix:
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2013
-      SL_CMAKE_VS: 12 2013
-    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
-      SL_CMAKE_VS: 15 2017
-
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2015
+      SL_CMAKE_VS: 14 2015
+  
 clone_folder: c:\projects\external_libgit2
 
 install:
@@ -63,17 +61,13 @@ build_script:
         -DCMAKE_BUILD_TYPE=Release
   - cmake --build . --config Release
   - ctest
-  - cd ..
-  
+
+after_build:
+  - cd c:\projects\
+  - 7z a external_libgit2\build.zip build-standalone\
+  - 7z a external_libgit2\build.zip build_i386\
+  - 7z a external_libgit2\build.zip build_amd64\
+ 
 artifacts:
-  - path: ../build-standalone
+  - path: build.zip
     name: build
-    type: zip
-    
-  - path: ../build_i386
-    name: build_i386
-    type: zip
-    
-  - path: ../build_amd64
-    name: build_amd64
-    type: zip
